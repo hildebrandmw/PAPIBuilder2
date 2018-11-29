@@ -1,0 +1,39 @@
+language: julia
+os:
+  - linux
+julia:
+  - 1.0
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+    - downloads
+env:
+  global:
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=false
+sudo: required
+
+# Before anything else, get the latest versions of things
+before_script:
+  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
+
+script:
+  - julia build_tarballs.jl
+
+
+deploy:
+    provider: releases
+    api_key:
+        # Note; this api_key is only valid for hildebrandmw/PAPIBuilder2; you need
+        # to make your own: https://docs.travis-ci.com/user/deployment/releases/
+        secure: ni9A9WVcd46/+dEbMLt86SnYPcUQ7dxZTrYRcCDAVol6WBMxiyCr4EoqLhWNnemDZTTWxb3r+9QvuZi6wHdiWIHIX17i7H5IlowmbNwXtP1LiJI/SdyU63H34FBnUoX6X/KPwznD3He5hzkAFBuidpPsDgbclcXF9blB/mqglblt2EArxNMxJIjTWuRVO97H5aAHwJIelGeyYr+DMucOXmqIbsQb1MPk1CadPtxTFmvZZ/3KllrN9az47d/7IZSqQSLMmP/HdBGlEIXCxYTOhTSXXzJqpUB0l762K5N4+I9xVUvJ7TNH8J+TCtz1HdSLhYRyG7MpolUYfDMx5pE79+Uskbn7cKt6CjZl3b7QInl1Hz+t6AZccT/cAPlmL1PRphUakfIRMnZxkjV/8idd6SFXNebD07dPVSX+ngZ+7oqC9ui4PqjCbCUBLYbIYAWuBLrHDJhbmCb+iTuEjvwlUl0udk22Q7W4UYjwwvTiaJAhxZgorm55uGDchNQw51xNxC7qfuQQOxa2eaC51prf7JpGUWOsAswQBl36PUNTKj1dqyzKiD40iEvPO3s1SRbmgCw0hcj4KvuYsrV5SNzfrxWGwL1b+T+Qx6XYcFQ4iJ6kzFbWgnOedn1+DFPMfDUZdq1JgLMZhX3FoRcA9nanb8iIuaU0X3zoCx7OQcNeKk8=
+    file_glob: true
+    file: products/*
+    skip_cleanup: true
+    on:
+        repo: hildebrandmw/PAPIBuilder2
+        tags: true
