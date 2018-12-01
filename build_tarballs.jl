@@ -26,7 +26,6 @@ exit
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Linux(:x86_64, libc=:musl),
     Linux(:x86_64, libc=:glibc)
 ]
 
