@@ -8,7 +8,7 @@ version = v"0.1.0"
 # Collection of sources required to build papi
 sources = [
     "https://bitbucket.org/icl/papi.git" =>
-    "f585d06cd9f22cccf9e4354502f3c998349de7d4",
+    "2a7e8e3b1d609dcc3a93b6e7daf36a372c35b3f8",
 
 ]
 
