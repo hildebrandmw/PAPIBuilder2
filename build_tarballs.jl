@@ -8,15 +8,15 @@ version = v"0.1.0"
 # Collection of sources required to build papi
 sources = [
     "https://bitbucket.org/icl/papi.git" =>
-    #"2a7e8e3b1d609dcc3a93b6e7daf36a372c35b3f8", # master
-    "b2d6558c481391f15000ae023c5dc4fee73dc4e6", # stable-5.5.1
+    "0fdac4fc7f95f0ac8039e431419a5133088911af" #master
+    #"b2d6558c481391f15000ae023c5dc4fee73dc4e6", # stable-5.5.1
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
 cd papi/src
-./configure --prefix=$prefix --host=$target
+./configure --prefix=$prefix --host=$target --enable-perfevent-rdpmc=no
 make -j${nprocs}
 make install
 exit
