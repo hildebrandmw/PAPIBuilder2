@@ -20,7 +20,9 @@ cd $WORKSPACE/srcdir
 cd libpfm-4.10.1/
 make -j${nprocs}
 make PREFIX=$prefix install
-make PREFIX=$prefix install_examples
+mkdir $prefix/bin
+cp examples/showevtinfo $prefix/bin/showevtinfo
+cp examples/check_events $prefix/bin/check_events
 
 cd ../papi/src
 ./configure --prefix=$prefix --host=$host --enable-perfevent-rdpmc=no
