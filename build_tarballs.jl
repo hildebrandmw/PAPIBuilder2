@@ -7,11 +7,15 @@ version = v"0.2.0"
 
 # Collection of sources required to build papi
 sources = [
-    "https://sourceforge.net/projects/perfmon2/files/libpfm4/libpfm-4.10.1.tar.gz" =>
-    "c61c575378b5c17ccfc5806761e4038828610de76e2e34fac9f7fa73ba844b49",
-
-    "https://bitbucket.org/icl/papi.git" =>
-    "0fdac4fc7f95f0ac8039e431419a5133088911af",
+     "https://sourceforge.net/projects/perfmon2/files/libpfm4/libpfm-4.10.1.tar.gz" =>
+     "c61c575378b5c17ccfc5806761e4038828610de76e2e34fac9f7fa73ba844b49",
+ 
+     "https://bitbucket.org/icl/papi.git" =>
+     "0fdac4fc7f95f0ac8039e431419a5133088911af",
+ 
+     "https://github.com/hildebrandmw/PAPIPatches.git" =>
+     "2d9dd0e1a35a1ef42c5df54ba9e7b63f13b0f569",
+ 
 ]
 
 # Bash recipe for building across all platforms
@@ -21,17 +25,18 @@ cd libpfm-4.10.1/
 make -j${nprocs}
 make PREFIX=$prefix install
 mkdir $prefix/bin
+
 cp examples/showevtinfo $prefix/bin/showevtinfo
 cp examples/check_events $prefix/bin/check_events
-
 cd ../papi/src
-./configure --prefix=$prefix --host=$host --enable-perfevent-rdpmc=no
+git apply ../../PAPIPatches/inherit.patch
+
+./configure --prefix=$prefix --host=$hose --enable-perfevent-rdpmc=no
 make -j${nprocs}
 make install
 exit
 
 """
-
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
