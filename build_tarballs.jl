@@ -13,9 +13,8 @@ sources = [
      "https://bitbucket.org/icl/papi.git" =>
      "0fdac4fc7f95f0ac8039e431419a5133088911af",
  
-     "https://github.com/hildebrandmw/PAPIPatches.git" =>
-     "2d9dd0e1a35a1ef42c5df54ba9e7b63f13b0f569",
- 
+     # Patch to apply
+     joinpath(@__DIR__, "patch"),
 ]
 
 # Bash recipe for building across all platforms
@@ -29,7 +28,7 @@ mkdir $prefix/bin
 cp examples/showevtinfo $prefix/bin/showevtinfo
 cp examples/check_events $prefix/bin/check_events
 cd ../papi/src
-git apply ../../PAPIPatches/inherit.patch
+git apply ../../inherit.patch
 
 ./configure --prefix=$prefix --host=$hose --enable-perfevent-rdpmc=no
 make -j${nprocs}
