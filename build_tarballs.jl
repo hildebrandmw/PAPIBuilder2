@@ -30,7 +30,7 @@ cp examples/check_events $prefix/bin/check_events
 cd ../papi/src
 git apply ../../inherit.patch
 
-./configure --prefix=$prefix --host=$hose --enable-perfevent-rdpmc=no
+./configure --prefix=$prefix --host=$host --enable-perfevent-rdpmc=no
 make -j${nprocs}
 make install
 exit
